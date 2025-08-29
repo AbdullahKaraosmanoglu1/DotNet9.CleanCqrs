@@ -1,9 +1,8 @@
-﻿using System.Net;
+﻿using DotNet9.IntegrationTests._Infra;
+using FluentAssertions;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using FluentAssertions;
-using DotNet9.IntegrationTests._Infra;
-using Xunit;
 
 namespace DotNet9.IntegrationTests.Users;
 

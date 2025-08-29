@@ -1,4 +1,5 @@
 ﻿using DotNet9.Application.Users.Abstractions;
+using DotNet9.Application.Users.Exceptions;
 using DotNet9.Domain.Users;
 using MediatR;
 
@@ -9,7 +10,7 @@ public sealed class RegisterUserHandler(IUserRepository repo) : IRequestHandler<
     public async Task<Guid> Handle(RegisterUserCommand request, CancellationToken ct)
     {
         if (await repo.EmailExistsAsync(request.Email, ct))
-            throw new InvalidOperationException("Email already in use");
+            throw new DuplicateEmailException(request.Email);
 
         var user = User.Register(request.Email, request.Username);
         await repo.AddAsync(user, ct);

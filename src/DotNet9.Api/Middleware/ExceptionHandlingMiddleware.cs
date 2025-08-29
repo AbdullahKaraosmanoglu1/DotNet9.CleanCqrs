@@ -1,9 +1,7 @@
-﻿using System.Net;
+﻿using DotNet9.Api.Common;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Text.Json;
-using DotNet9.Api.Common;
 
 namespace DotNet9.Api.Middleware;
 

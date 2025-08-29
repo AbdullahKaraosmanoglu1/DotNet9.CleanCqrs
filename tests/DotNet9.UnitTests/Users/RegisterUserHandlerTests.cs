@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DotNet9.Application.Users.Abstractions;
+﻿using DotNet9.Application.Users.Abstractions;
 using DotNet9.Application.Users.Commands.RegisterUser;
 using FluentAssertions;
 using NSubstitute;
-using Xunit;
 
 namespace DotNet9.UnitTests.Users;
 
