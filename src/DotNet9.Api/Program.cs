@@ -14,6 +14,7 @@ using Hellang.Middleware.ProblemDetails;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
+using Asp.Versioning.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,16 +92,15 @@ if (app.Environment.IsDevelopment() && !app.Environment.IsEnvironment("Test"))
     var provider = app.Services.GetRequiredService<Asp.Versioning.ApiExplorer.IApiVersionDescriptionProvider>();
 
     app.UseSwagger(); // <-- önce bu
-    app.UseSwaggerUI(c =>
+    app.UseSwaggerUI(opt =>
     {
-        foreach (var d in provider.ApiVersionDescriptions)
+        var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+        foreach (var desc in provider.ApiVersionDescriptions)
         {
-            // v1, v2... için UI'ye endpoint ekle
-            c.SwaggerEndpoint($"/swagger/{d.GroupName}/swagger.json",
-                $"DotNet9.Api {d.GroupName.ToUpperInvariant()}");
+            opt.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json",
+                $"DotNet9.Api {desc.GroupName.ToUpperInvariant()}");
         }
-        // Ýstersen kökten otomatik Swagger'a yönlendiriyoruz:
-        // c.RoutePrefix = string.Empty; // böyle yaparsan / direkt Swagger olur
+        opt.RoutePrefix = "swagger"; // /swagger/index.html
     });
 }
 

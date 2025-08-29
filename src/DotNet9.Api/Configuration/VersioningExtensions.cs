@@ -7,22 +7,18 @@ public static class VersioningExtensions
 {
     public static IServiceCollection AddApiVersioningAndExplorer(this IServiceCollection services)
     {
-        services
-            .AddApiVersioning(opt =>
-            {
-                opt.DefaultApiVersion = new ApiVersion(1, 0);
-                opt.AssumeDefaultVersionWhenUnspecified = true;
-                opt.ReportApiVersions = true;
-                opt.ApiVersionReader = ApiVersionReader.Combine(
-                    new UrlSegmentApiVersionReader(),
-                    new HeaderApiVersionReader("x-api-version"),
-                    new QueryStringApiVersionReader("api-version"));
-            })
-            .AddApiExplorer(opt =>
-            {
-                opt.GroupNameFormat = "'v'VVV";     // => v1, v2
-                opt.SubstituteApiVersionInUrl = true;
-            });
+        services.AddApiVersioning(opt =>
+        {
+            opt.AssumeDefaultVersionWhenUnspecified = true;
+            opt.DefaultApiVersion = new ApiVersion(1, 0);
+            opt.ReportApiVersions = true;
+        })
+        .AddApiExplorer(opt =>
+        {
+            // 'v1' istiyorsan "'v'V" kullan; 'v1.0' istiyorsan "'v'VVV"
+            opt.GroupNameFormat = "'v'V";                // -> v1
+            opt.SubstituteApiVersionInUrl = true;
+        });
 
         return services;
     }
